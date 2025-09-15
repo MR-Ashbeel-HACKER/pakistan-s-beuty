@@ -86,29 +86,28 @@
     .section.show{ transform:none; opacity:1; }
 
     /* 3D tilt-ready photo */
-    .photo{ display:inline-block; perspective:1200px; cursor:pointer; max-width:100%; position: relative; overflow: hidden; }
+    .photo{ display:inline-block; perspective:1200px; cursor:pointer; max-width:100%; position:relative; }
     .photo img{ display:block; width:100%; max-height:540px; object-fit:cover; border-radius:12px; transition:transform .18s var(--ease), box-shadow .3s var(--ease); transform-style:preserve-3d; box-shadow:0 14px 40px rgba(0,0,0,0.45); will-change:transform; }
     .photo:hover img{ box-shadow:0 28px 60px rgba(0,0,0,0.55); }
 
-    /* ---------- PHOTO HOVER DESCRIPTION ---------- */
-    .photo .desc-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      font-weight:600;
-      opacity: 0;
-      transform: translateY(100%);
-      transition: all 0.3s var(--ease);
-      border-radius: 0 0 12px 12px;
-      pointer-events: none;
+    /* DETAIL DESCRIPTION OVERLAY */
+    .photo-desc {
+      position:absolute;
+      bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7);
+      color:#fff;
+      padding:12px 16px;
+      font-size:0.95rem;
+      border-radius:0 0 12px 12px;
+      opacity:0;
+      transform:translateY(100%);
+      transition:all 0.4s ease-out;
+      pointer-events:none;
     }
-    .photo:hover .desc-overlay {
-      opacity: 1;
-      transform: translateY(0);
+    .photo.show-desc .photo-desc {
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
     }
 
     h2{ margin:18px 0; color:var(--accent); }
@@ -135,8 +134,6 @@
   <!-- INTRO -->
   <div id="intro" aria-hidden="false">
     <button class="skip" id="skipIntro" title="Skip intro">Skip ✕</button>
-
-    <!-- intro slideshow background (resized images) -->
     <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Nanga-parbat.jpg/1080px-Nanga-parbat.jpg'); animation-delay:0s;"></div>
     <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hunza_Valley%2C_Hunza.jpg/1080px-Hunza_Valley%2C_Hunza.jpg'); animation-delay:2.4s;"></div>
     <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Skardu_%2C_Pakistan.jpg/1080px-Skardu_%2C_Pakistan.jpg'); animation-delay:4.8s;"></div>
@@ -176,53 +173,45 @@
   <!-- MAIN -->
   <main>
     <section id="nanga" class="section">
-      <div class="photo" data-caption="Nanga Parbat — altitude: 8,126 m">
+      <div class="photo" data-caption="Nanga Parbat — altitude: 8,126 m. Ninth-highest mountain in the world, famously called the 'Killer Mountain' for its steep slopes and dangerous climbs.">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Nanga-parbat.jpg/1080px-Nanga-parbat.jpg" alt="Nanga Parbat" loading="lazy">
-        <div class="desc-overlay">Altitude: 8,126 m — One of the most dramatic Himalayan peaks.</div>
+        <div class="photo-desc"></div>
       </div>
       <h2>Nanga Parbat</h2>
       <p class="lead">The “Killer Mountain” at 8,126 m — one of the most dramatic Himalayan peaks.</p>
     </section>
 
     <section id="hunza" class="section">
-      <div class="photo" data-caption="Hunza Valley — best time Sep–Nov">
+      <div class="photo" data-caption="Hunza Valley — Northern Pakistan, a lush valley with rivers, orchards, and breathtaking autumn colors. Known for longevity of residents and historical forts like Baltit Fort.">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hunza_Valley%2C_Hunza.jpg/1080px-Hunza_Valley%2C_Hunza.jpg" alt="Hunza Valley" loading="lazy">
-        <div class="desc-overlay">Best time to visit: September–November — Lush valleys and autumn colors.</div>
+        <div class="photo-desc"></div>
       </div>
       <h2>Hunza Valley</h2>
-      <p class="lead">Location: Gilgit-Baltistan, Pakistan.
-
-Altitude: 8,126 meters (26,660 feet).
-
-Significance: Nanga Parbat is the ninth-highest mountain in the world. It’s famously called the “Killer Mountain” because of its steep slopes and difficult climbing conditions.
-
-Geography: It has one of the most dramatic vertical reliefs in the world. The mountain rises sharply from the surrounding terrain, creating a huge, imposing peak.
-
-Features: Glaciers, snow-capped peaks, and rugged terrain. Popular for mountaineering, but very challenging and dangerous.</p>
+      <p class="lead">A lush valley with rivers, orchards, and incredible autumn colors.</p>
     </section>
 
     <section id="skardu" class="section">
-      <div class="photo" data-caption="Skardu — gateway to Karakoram">
+      <div class="photo" data-caption="Skardu — gateway to Karakoram, surrounded by mountains, lakes like Shangrila, glaciers, and epic peaks. Popular for trekking and mountaineering.">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Skardu_%2C_Pakistan.jpg/1080px-Skardu_%2C_Pakistan.jpg" alt="Skardu Valley" loading="lazy">
-        <div class="desc-overlay">Gateway to the Karakoram — Lakes, glaciers, and epic mountains.</div>
+        <div class="photo-desc"></div>
       </div>
       <h2>Skardu Valley</h2>
       <p class="lead">Gateway to the Karakoram, with lakes, glaciers, and epic mountains.</p>
     </section>
 
     <section id="deosai" class="section">
-      <div class="photo" data-caption="Deosai Plains — Land of Giants">
+      <div class="photo" data-caption="Deosai Plains — Land of Giants, high-altitude plateau with wildflowers, wildlife including Himalayan brown bears, and wide open plains. Ideal for stargazing.">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/The_Land_of_Giants%2C_Deosai.jpg/1080px-The_Land_of_Giants%2C_Deosai.jpg" alt="Deosai Plains" loading="lazy">
-        <div class="desc-overlay">High-altitude plateau — Wildflowers, wildlife, and starry skies.</div>
+        <div class="photo-desc"></div>
       </div>
       <h2>Deosai Plains</h2>
       <p class="lead">A vast high-altitude plateau with wildflowers and starry skies.</p>
     </section>
 
     <section id="neelum" class="section">
-      <div class="photo" data-caption="Neelum Valley — emerald rivers">
+      <div class="photo" data-caption="Neelum Valley — emerald rivers and lush green forests. Known as 'Blue Pearl of Pakistan', perfect for trekking, camping, and natural beauty lovers.">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Neelum_valley_Pakistan.jpg/1080px-Neelum_valley_Pakistan.jpg" alt="Neelum Valley" loading="lazy">
-        <div class="desc-overlay">Crystal-clear rivers and lush green forests — Azad Kashmir’s gem.</div>
+        <div class="photo-desc"></div>
       </div>
       <h2>Neelum Valley</h2>
       <p class="lead">Crystal-clear rivers and lush green forests in Azad Kashmir.</p>
@@ -232,60 +221,6 @@ Features: Glaciers, snow-capped peaks, and rugged terrain. Popular for mountaine
       <h2>About</h2>
       <p class="lead">
         This project was created by <strong>Ashbeel Zai</strong> to showcase Pakistan’s breathtaking natural landscapes.
-        If anyone wants to work with me contact me through gmail!.
+        If anyone want to work with me contact me through gmail!.
         <br><br>
-        Developer Contact: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak9499348@gmail.com</a>
-      </p>
-    </section>
-
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <p class="lead">Reach out via email or social media for collaborations, photography, or travel stories.</p>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 Pakistan Landscapes — Enhanced. All Rights Reserved.
-  </footer>
-
-  <!-- AUDIO -->
-  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_2dfc0f3f12.mp3"></audio>
-
-  <script>
-    // ---------- INTRO LETTER ANIMATION ----------
-    const titleText = "Explore Pakistan";
-    const titleContainer = document.getElementById("introTitle");
-    titleContainer.innerHTML = titleText.split("").map((c,i)=>`<span class="letter" style="--delay:${i*0.06}s">${c}</span>`).join("");
-
-    const intro = document.getElementById("intro");
-    document.getElementById("skipIntro").addEventListener("click", ()=>intro.classList.add("hide"));
-    document.getElementById("enterBtn").addEventListener("click", ()=>intro.classList.add("hide"));
-    document.getElementById("playMontageBtn").addEventListener("click", ()=>{
-      document.querySelectorAll(".bg-slide").forEach(slide=>slide.style.animationPlayState="running");
-    });
-
-    // ---------- LIGHT/DARK THEME ----------
-    const toggleTheme = document.getElementById("toggleTheme");
-    toggleTheme.addEventListener("click", ()=>{
-      document.body.classList.toggle("light");
-    });
-
-    // ---------- AUDIO ----------
-    const musicBtn = document.getElementById("toggleMusic");
-    const bgMusic = document.getElementById("bgMusic");
-    musicBtn.addEventListener("click", ()=>{
-      if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent="🔇"; } 
-      else { bgMusic.pause(); musicBtn.textContent="🔊"; }
-    });
-
-    // ---------- SCROLL ANIMATION ----------
-    const sections = document.querySelectorAll(".section");
-    const observer = new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting) entry.target.classList.add("show");
-      });
-    }, {threshold:0.2});
-    sections.forEach(sec=>observer.observe(sec));
-  </script>
-</body>
-</html>
+        Developer Contact: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak949
