@@ -86,9 +86,30 @@
     .section.show{ transform:none; opacity:1; }
 
     /* 3D tilt-ready photo */
-    .photo{ display:inline-block; perspective:1200px; cursor:pointer; max-width:100%; }
+    .photo{ display:inline-block; perspective:1200px; cursor:pointer; max-width:100%; position: relative; overflow: hidden; }
     .photo img{ display:block; width:100%; max-height:540px; object-fit:cover; border-radius:12px; transition:transform .18s var(--ease), box-shadow .3s var(--ease); transform-style:preserve-3d; box-shadow:0 14px 40px rgba(0,0,0,0.45); will-change:transform; }
     .photo:hover img{ box-shadow:0 28px 60px rgba(0,0,0,0.55); }
+
+    /* ---------- PHOTO HOVER DESCRIPTION ---------- */
+    .photo .desc-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-weight:600;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: all 0.3s var(--ease);
+      border-radius: 0 0 12px 12px;
+      pointer-events: none;
+    }
+    .photo:hover .desc-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     h2{ margin:18px 0; color:var(--accent); }
     p.lead{ max-width:860px; margin:0 auto; color:rgba(255,255,255,0.92); }
@@ -157,6 +178,7 @@
     <section id="nanga" class="section">
       <div class="photo" data-caption="Nanga Parbat — altitude: 8,126 m">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Nanga-parbat.jpg/1080px-Nanga-parbat.jpg" alt="Nanga Parbat" loading="lazy">
+        <div class="desc-overlay">Altitude: 8,126 m — One of the most dramatic Himalayan peaks.</div>
       </div>
       <h2>Nanga Parbat</h2>
       <p class="lead">The “Killer Mountain” at 8,126 m — one of the most dramatic Himalayan peaks.</p>
@@ -165,6 +187,7 @@
     <section id="hunza" class="section">
       <div class="photo" data-caption="Hunza Valley — best time Sep–Nov">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hunza_Valley%2C_Hunza.jpg/1080px-Hunza_Valley%2C_Hunza.jpg" alt="Hunza Valley" loading="lazy">
+        <div class="desc-overlay">Best time to visit: September–November — Lush valleys and autumn colors.</div>
       </div>
       <h2>Hunza Valley</h2>
       <p class="lead">A lush valley with rivers, orchards, and incredible autumn colors.</p>
@@ -173,6 +196,7 @@
     <section id="skardu" class="section">
       <div class="photo" data-caption="Skardu — gateway to Karakoram">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Skardu_%2C_Pakistan.jpg/1080px-Skardu_%2C_Pakistan.jpg" alt="Skardu Valley" loading="lazy">
+        <div class="desc-overlay">Gateway to the Karakoram — Lakes, glaciers, and epic mountains.</div>
       </div>
       <h2>Skardu Valley</h2>
       <p class="lead">Gateway to the Karakoram, with lakes, glaciers, and epic mountains.</p>
@@ -181,6 +205,7 @@
     <section id="deosai" class="section">
       <div class="photo" data-caption="Deosai Plains — Land of Giants">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/The_Land_of_Giants%2C_Deosai.jpg/1080px-The_Land_of_Giants%2C_Deosai.jpg" alt="Deosai Plains" loading="lazy">
+        <div class="desc-overlay">High-altitude plateau — Wildflowers, wildlife, and starry skies.</div>
       </div>
       <h2>Deosai Plains</h2>
       <p class="lead">A vast high-altitude plateau with wildflowers and starry skies.</p>
@@ -189,6 +214,7 @@
     <section id="neelum" class="section">
       <div class="photo" data-caption="Neelum Valley — emerald rivers">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Neelum_valley_Pakistan.jpg/1080px-Neelum_valley_Pakistan.jpg" alt="Neelum Valley" loading="lazy">
+        <div class="desc-overlay">Crystal-clear rivers and lush green forests — Azad Kashmir’s gem.</div>
       </div>
       <h2>Neelum Valley</h2>
       <p class="lead">Crystal-clear rivers and lush green forests in Azad Kashmir.</p>
@@ -198,7 +224,7 @@
       <h2>About</h2>
       <p class="lead">
         This project was created by <strong>Ashbeel Zai</strong> to showcase Pakistan’s breathtaking natural landscapes.
-        If anyone want to work with me contact me through gmail!.
+        If anyone wants to work with me contact me through gmail!.
         <br><br>
         Developer Contact: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak9499348@gmail.com</a>
       </p>
@@ -206,98 +232,52 @@
 
     <section id="contact" class="section">
       <h2>Contact</h2>
-      <p class="lead">
-        Want to collaborate or learn more?  
-        <br>Email: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak9499348@gmail.com</a>
-      </p>
-      <div style="margin-top:20px; font-size:1.6rem;">
-        <a href="https://github.com/" target="_blank" style="margin:0 10px; color:var(--accent);">🐙 GitHub</a>
-      </div>
+      <p class="lead">Reach out via email or social media for collaborations, photography, or travel stories.</p>
     </section>
   </main>
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <div class="lb-inner">
-      <div class="lb-media"><img src="" alt="" loading="lazy"></div>
-      <div class="lb-controls">
-        <button class="icon-btn" id="lbClose">✕</button>
-      </div>
-      <div class="lb-caption"></div>
-    </div>
-  </div>
-
   <footer>
-    &copy; 2025 Ashbeel | All Rights Reserved
+    © 2025 Pakistan Landscapes — Enhanced. All Rights Reserved.
   </footer>
 
-  <audio id="bgMusic" loop preload="auto" src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Ambient_background_music.ogg"></audio>
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_2dfc0f3f12.mp3"></audio>
 
   <script>
-    // ---------- INTRO ----------
-    const introEl = document.getElementById('intro');
-    const enterBtn = document.getElementById('enterBtn');
-    const skipBtn = document.getElementById('skipIntro');
-    const titleEl = document.getElementById('introTitle');
-    const letters = "Pakistan's Beauty".split('');
-    letters.forEach((l,i)=> {
-      const span = document.createElement('span');
-      span.classList.add('letter'); span.style.setProperty('--delay',`${i*0.06}s`); span.textContent=l;
-      titleEl.appendChild(span);
+    // ---------- INTRO LETTER ANIMATION ----------
+    const titleText = "Explore Pakistan";
+    const titleContainer = document.getElementById("introTitle");
+    titleContainer.innerHTML = titleText.split("").map((c,i)=>`<span class="letter" style="--delay:${i*0.06}s">${c}</span>`).join("");
+
+    const intro = document.getElementById("intro");
+    document.getElementById("skipIntro").addEventListener("click", ()=>intro.classList.add("hide"));
+    document.getElementById("enterBtn").addEventListener("click", ()=>intro.classList.add("hide"));
+    document.getElementById("playMontageBtn").addEventListener("click", ()=>{
+      document.querySelectorAll(".bg-slide").forEach(slide=>slide.style.animationPlayState="running");
     });
 
-    function hideIntro(){ introEl.classList.add('hide'); }
-    enterBtn.addEventListener('click',hideIntro);
-    skipBtn.addEventListener('click',hideIntro);
-    setTimeout(hideIntro, 7000);
+    // ---------- LIGHT/DARK THEME ----------
+    const toggleTheme = document.getElementById("toggleTheme");
+    toggleTheme.addEventListener("click", ()=>{
+      document.body.classList.toggle("light");
+    });
 
-    // ---------- SECTIONS SHOW ----------
-    const sections = document.querySelectorAll('.section');
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
-    }, {threshold:0.25});
-    sections.forEach(s=>observer.observe(s));
+    // ---------- AUDIO ----------
+    const musicBtn = document.getElementById("toggleMusic");
+    const bgMusic = document.getElementById("bgMusic");
+    musicBtn.addEventListener("click", ()=>{
+      if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent="🔇"; } 
+      else { bgMusic.pause(); musicBtn.textContent="🔊"; }
+    });
 
-    // ---------- LIGHTBOX ----------
-    const photos = document.querySelectorAll('.photo');
-    const lb = document.getElementById('lightbox');
-    const lbImg = lb.querySelector('img');
-    const lbCaption = lb.querySelector('.lb-caption');
-    const lbClose = document.getElementById('lbClose');
-
-    photos.forEach(p=>{
-      p.addEventListener('click',()=> {
-        lb.classList.add('active');
-        lbImg.src = p.querySelector('img').src;
-        lbCaption.textContent = p.dataset.caption || '';
+    // ---------- SCROLL ANIMATION ----------
+    const sections = document.querySelectorAll(".section");
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add("show");
       });
-    });
-    lbClose.addEventListener('click',()=> lb.classList.remove('active'));
-
-    // ---------- 3D TILT ----------
-    photos.forEach(photo=>{
-      photo.addEventListener('mousemove', e=>{
-        const img = photo.querySelector('img');
-        const rect = photo.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width/2;
-        const y = e.clientY - rect.top - rect.height/2;
-        img.style.transform = `rotateY(${x/25}deg) rotateX(${-y/25}deg)`;
-      });
-      photo.addEventListener('mouseleave',()=> { photo.querySelector('img').style.transform='rotateY(0deg) rotateX(0deg)'; });
-    });
-
-    // ---------- MUSIC ----------
-    const musicBtn = document.getElementById('toggleMusic');
-    const bgMusic = document.getElementById('bgMusic');
-    let playing = false;
-    musicBtn.addEventListener('click',()=>{ 
-      playing ? bgMusic.pause() : bgMusic.play();
-      playing = !playing; 
-    });
-
-    // ---------- THEME ----------
-    const themeBtn = document.getElementById('toggleTheme');
-    themeBtn.addEventListener('click',()=>document.body.classList.toggle('light'));
+    }, {threshold:0.2});
+    sections.forEach(sec=>observer.observe(sec));
   </script>
 </body>
 </html>
