@@ -3,139 +3,422 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pakistan Landscapes — Enhanced</title>
+  <title>Pakistan Landscapes</title>
+
+  <!-- Favicon & meta -->
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg" type="image/svg+xml">
+  <meta name="description" content="Explore Pakistan’s breathtaking landscapes with smooth animations, cinematic welcome screen, and interactive 3D effects. Created by Ashbeel.">
+  <meta property="og:title" content="Pakistan Landscapes">
+  <meta property="og:description" content="Showcasing Pakistan’s natural beauty with animations and immersive design.">
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/9/95/Hunza_Valley%2C_Hunza.jpg">
+  <meta property="og:type" content="website">
 
   <style>
-    body {
-      margin: 0; font-family: Arial, sans-serif;
-      background: #111; color: #eee; overflow-x: hidden;
-      transition: background 0.5s, color 0.5s;
+    :root{
+      --bg: #0d1b2a;
+      --accent: #00ffc3;
+      --text: #f1f5f9;
+      --glass: rgba(255,255,255,0.05);
+      --ease: cubic-bezier(.2,.9,.3,1);
     }
-    body.light { background: #fafafa; color: #222; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family: "Segoe UI",sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      transition: background 0.4s, color 0.4s;
+    }
+    /* light theme variables applied by .light on body */
+    body.light { --bg:#f8fafc; --text:#111; --glass: rgba(0,0,0,0.04); }
 
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.6); color: white;
-      padding: 10px 20px; display: flex; justify-content: space-between;
-      z-index: 1000;
+    /* ---------- INTRO ---------- */
+    #intro {
+      position:fixed;inset:0;z-index:9999;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,rgba(2,6,23,0.95), rgba(2,6,23,0.85));
+      overflow:hidden;
     }
-    header button { background: none; border: none; font-size: 20px; cursor: pointer; color: inherit; }
+    #intro .bg-slide{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.08); animation:slideFade 12s linear infinite; }
+    @keyframes slideFade{
+      0%{opacity:0; transform:scale(1.08)}
+      6%{opacity:1; transform:scale(1.02)}
+      22%{opacity:1; transform:scale(1)}
+      30%{opacity:0; transform:scale(0.98)}
+      100%{opacity:0}
+    }
+    #intro .inner{ position:relative; z-index:10; text-align:center; padding:30px; max-width:1100px; }
+    .logo-badge{ display:inline-grid; place-items:center; width:72px; height:72px; border-radius:14px;
+      background:linear-gradient(135deg,#00ffc3,#00a3ff); color:#022; font-weight:800;
+      box-shadow:0 18px 60px rgba(0,255,195,0.08), inset 0 -6px rgba(255,255,255,0.06);
+      margin-bottom:18px; font-size:20px;
+    }
+    .intro-title{ color:var(--accent); font-size:clamp(1.4rem,4.2vw,3.2rem); letter-spacing:8px; margin-bottom:10px; display:inline-block; line-height:1; }
+    .intro-title span.letter{ display:inline-block; transform:translateY(24px) rotateX(25deg); opacity:0; animation:letterIn .7s var(--delay) forwards; }
+    @keyframes letterIn{ to{ transform:none; opacity:1 } }
+    .intro-sub{ color:rgba(255,255,255,0.85); margin-top:8px; font-size:1rem; opacity:.95; text-shadow:0 8px 30px rgba(0,0,0,0.6); }
+    .intro-cta{ margin-top:22px; display:flex; gap:12px; justify-content:center; align-items:center; }
+    .btn{ padding:.7rem 1.25rem; border-radius:999px; background:var(--accent); color:#022; font-weight:700; border:none; cursor:pointer; box-shadow:0 14px 40px rgba(0,255,195,0.08); transition:transform .25s var(--ease), box-shadow .25s var(--ease), opacity .25s; }
+    .btn.secondary{ background:transparent; border:1px solid rgba(255,255,255,0.08); color:var(--text); }
+    .btn:hover{ transform:translateY(-4px); }
+    .skip{ position:absolute; top:16px; right:18px; color:rgba(255,255,255,0.9); font-weight:600; background:transparent; border:none; cursor:pointer; padding:8px 10px; border-radius:8px; transition:background .2s; }
+    .skip:hover{ background:rgba(255,255,255,0.03); }
+    #intro.hide{ animation:introHide .6s forwards; }
+    @keyframes introHide{ to{ opacity:0; visibility:hidden; transform:translateY(-12px); } }
 
-    main { margin-top: 70px; padding: 20px; }
+    /* ---------- LAYOUT ---------- */
+    header{ position:sticky; top:0; z-index:999; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:center; padding:14px 20px; }
+    .brand{ display:flex; gap:10px; align-items:center; }
+    .logo{ width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg,#00ffc3,#00a3ff); display:grid; place-items:center; font-weight:bold; color:#012; }
+    .title{ font-weight:700; color:var(--accent); letter-spacing:1px; }
+    nav a{ margin-left:20px; color:var(--text); text-decoration:none; font-weight:600; position:relative; }
+    nav a::after{ content:""; position:absolute; left:0; bottom:-3px; width:0; height:2px; background:var(--accent); transition:.25s; }
+    nav a:hover::after{ width:100% }
+    nav a:hover{ color:var(--accent) }
 
-    .gallery {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 20px;
-    }
-    .gallery img {
-      width: 100%; border-radius: 12px;
-      transform-style: preserve-3d;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-    }
-    .gallery img:hover {
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-    }
+    main{ max-width:1100px; margin:36px auto; padding:0 20px; }
+    .section{ min-height:82vh; margin:36px 0; padding:26px; background:var(--glass); border-radius:14px; text-align:center; transform:translateY(60px); opacity:0; transition:all .8s var(--ease); }
+    .section.show{ transform:none; opacity:1; }
 
-    /* Popup modal */
-    .modal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: none; justify-content: center; align-items: center;
-      z-index: 2000;
-    }
-    .modal-content {
-      background: white; color: black; padding: 20px;
-      max-width: 600px; border-radius: 10px;
-      animation: fadeIn 0.5s ease;
-    }
-    .modal.show { display: flex; }
-    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-    .closeBtn { float: right; cursor: pointer; font-size: 20px; }
+    /* 3D tilt-ready photo */
+    .photo{ display:inline-block; perspective:1200px; cursor:pointer; max-width:100%; }
+    .photo img{ display:block; width:100%; max-height:540px; object-fit:cover; border-radius:12px; transition:transform .18s var(--ease), box-shadow .3s var(--ease); transform-style:preserve-3d; box-shadow:0 14px 40px rgba(0,0,0,0.45); will-change:transform; }
+    .photo:hover img{ box-shadow:0 28px 60px rgba(0,0,0,0.55); }
+
+    h2{ margin:18px 0; color:var(--accent); }
+    p.lead{ max-width:860px; margin:0 auto; color:rgba(255,255,255,0.92); }
+
+    footer{ text-align:center; padding:26px; color:rgba(255,255,255,0.6); }
+
+    /* LIGHTBOX */
+    #lightbox{ position:fixed; inset:0; background:rgba(2,6,23,0.92); display:none; align-items:center; justify-content:center; z-index:10001; padding:24px; }
+    #lightbox.active{ display:flex; }
+    .lb-inner{ max-width:1100px; width:100%; border-radius:12px; overflow:hidden; position:relative; background:#011019; }
+    .lb-media img{ width:100%; height:auto; display:block; }
+    .lb-controls{ position:absolute; right:12px; top:12px; display:flex; gap:8px; }
+    .icon-btn{ background:rgba(255,255,255,0.06); border:0; color:var(--text); padding:8px 10px; border-radius:8px; cursor:pointer; }
+    .lb-caption{ padding:16px; color:#dff; font-weight:600; }
+    .montage-slide{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.02); transition:opacity .6s ease, transform .6s ease; }
+    .montage-slide.active{ opacity:1; transform:scale(1); }
+    .lb-bottom{ display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,0,0,0.25); }
+
+    @media (max-width:880px){ .intro-title{ font-size:1.6rem } .photo img{ max-height:360px } }
   </style>
 </head>
 <body>
-  <header>
-    <h2>Pakistan Landscapes</h2>
-    <div>
-      <button id="toggleTheme">🌙</button>
-      <button id="toggleMusic">🔊</button>
+  <!-- INTRO -->
+  <div id="intro" aria-hidden="false">
+    <button class="skip" id="skipIntro" title="Skip intro">Skip ✕</button>
+
+    <!-- intro slideshow background (same images used on site) -->
+    <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/3/3b/Nanga-parbat.jpg'); animation-delay:0s;"></div>
+    <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/9/95/Hunza_Valley%2C_Hunza.jpg'); animation-delay:2.4s;"></div>
+    <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/2/2a/Skardu_%2C_Pakistan.jpg'); animation-delay:4.8s;"></div>
+    <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/d/d0/The_Land_of_Giants%2C_Deosai.jpg'); animation-delay:7.2s;"></div>
+    <div class="bg-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/8/8d/Neelum_valley_Pakistan.jpg'); animation-delay:9.6s;"></div>
+
+    <div class="inner" role="dialog" aria-label="Welcome">
+      <div class="logo-badge">PK</div>
+      <div id="introTitle" class="intro-title" aria-hidden="true"></div>
+      <div class="intro-sub">A cinematic tour of Pakistan's most stunning landscapes — click enter, or wait to auto-land.</div>
+      <div class="intro-cta">
+        <button class="btn" id="enterBtn">Enter Site</button>
+        <button class="btn secondary" id="playMontageBtn">Play Montage</button>
+      </div>
     </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo">PK</div>
+      <div class="title">Landscapes</div>
+    </div>
+    <nav>
+      <a href="#nanga">Nanga</a>
+      <a href="#hunza">Hunza</a>
+      <a href="#skardu">Skardu</a>
+      <a href="#deosai">Deosai</a>
+      <a href="#neelum">Neelum</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button class="btn secondary" id="toggleTheme" style="margin-left:15px;">🌙/☀️</button>
+      <button class="btn secondary" id="toggleMusic" style="margin-left:10px;">🔊</button>
+    </nav>
   </header>
 
+  <!-- MAIN -->
   <main>
-    <section>
-      <h1>Explore the Beauty</h1>
-      <div class="gallery">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Nanga_Parbat_The_Killer_Mountain.jpg" alt="Nanga Parbat" data-info="Nanga Parbat (8,126m) is the 9th highest mountain in the world, known as the Killer Mountain for its challenging climbs and steep slopes." />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Hunza_Valley_-_Karimabad.jpg" alt="Hunza Valley" data-info="Hunza Valley, surrounded by peaks like Rakaposhi, is famous for its orchards, rivers, and vibrant cultural heritage." />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Skardu_valley.jpg" alt="Skardu Valley" data-info="Skardu is the gateway to the Karakoram Range and K2, featuring stunning lakes, glaciers, and dramatic landscapes." />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Deosai_Plain.jpg" alt="Deosai Plains" data-info="The Deosai Plains, at 4,114m, are one of the world’s highest plateaus, home to Himalayan brown bears and breathtaking wildflowers." />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Neelum_Valley.jpg" alt="Neelum Valley" data-info="Neelum Valley in Azad Kashmir is lush with pine forests, emerald rivers, and charming villages, earning it the name 'Blue Pearl of Pakistan'." />
+    <section id="nanga" class="section">
+      <div class="photo" data-caption="Nanga Parbat — altitude: 8,126 m">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Nanga-parbat.jpg" alt="Nanga Parbat">
+      </div>
+      <h2>Nanga Parbat</h2>
+      <p class="lead">The “Killer Mountain” at 8,126 m — one of the most dramatic Himalayan peaks.</p>
+    </section>
+
+    <section id="hunza" class="section">
+      <div class="photo" data-caption="Hunza Valley — best time Sep–Nov">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Hunza_Valley%2C_Hunza.jpg" alt="Hunza Valley">
+      </div>
+      <h2>Hunza Valley</h2>
+      <p class="lead">A lush valley with rivers, orchards, and incredible autumn colors.</p>
+    </section>
+
+    <section id="skardu" class="section">
+      <div class="photo" data-caption="Skardu — gateway to Karakoram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Skardu_%2C_Pakistan.jpg" alt="Skardu Valley">
+      </div>
+      <h2>Skardu Valley</h2>
+      <p class="lead">Gateway to the Karakoram, with lakes, glaciers, and epic mountains.</p>
+    </section>
+
+    <section id="deosai" class="section">
+      <div class="photo" data-caption="Deosai Plains — Land of Giants">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/The_Land_of_Giants%2C_Deosai.jpg" alt="Deosai Plains">
+      </div>
+      <h2>Deosai Plains</h2>
+      <p class="lead">A vast high-altitude plateau with wildflowers and starry skies.</p>
+    </section>
+
+    <section id="neelum" class="section">
+      <div class="photo" data-caption="Neelum Valley — emerald rivers">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Neelum_valley_Pakistan.jpg" alt="Neelum Valley">
+      </div>
+      <h2>Neelum Valley</h2>
+      <p class="lead">Crystal-clear rivers and lush green forests in Azad Kashmir.</p>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p class="lead">
+        This project was created by <strong>Ashbeel Zai</strong> to showcase Pakistan’s breathtaking natural landscapes.
+        Hello Everyone i am an Ethical-Hacker and my hobby is game-dev and web-dev.
+        <br><br>
+        Developer Contact: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak9499348@gmail.com</a>
+      </p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <p class="lead">
+        Want to collaborate or learn more?  
+        <br>Email: <a href="mailto:ak9499348@gmail.com" style="color:var(--accent);">ak9499348@gmail.com</a>
+      </p>
+      <div style="margin-top:20px; font-size:1.6rem;">
+        <a href="https://github.com/" target="_blank" style="margin:0 10px; color:var(--accent);">🐙 GitHub</a>
+        <a href="https://www.linkedin.com/" target="_blank" style="margin:0 10px; color:var(--accent);">💼 LinkedIn</a>
+        <a href="https://twitter.com/" target="_blank" style="margin:0 10px; color:var(--accent);">🐦 Twitter</a>
       </div>
     </section>
   </main>
 
-  <footer style="text-align:center; padding:20px; margin-top:30px;">
-    © 2025 Pakistan Landscapes — Enhanced. All Rights Reserved.
-  </footer>
+  <footer>© 2025 Pakistan Landscapes | Created by Ashbeel Zai | Images: Wikimedia Commons</footer>
 
-  <!-- Modal -->
-  <div class="modal" id="infoModal">
-    <div class="modal-content">
-      <span class="closeBtn">&times;</span>
-      <h3 id="modalTitle"></h3>
-      <p id="modalText"></p>
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-hidden="true">
+    <div class="lb-inner" role="document">
+      <div class="lb-controls">
+        <button class="icon-btn" id="lbClose">Close ✕</button>
+        <button class="icon-btn" id="lbPause">⏸</button>
+      </div>
+      <div class="lb-media" style="position:relative;height:70vh;background:#000;"></div>
+      <div class="lb-bottom">
+        <div class="lb-caption">Caption</div>
+        <div style="font-size:.9rem;color:rgba(255,255,255,0.7);padding-right:8px">Press ESC to close</div>
+      </div>
     </div>
   </div>
 
-  <!-- AUDIO -->
-  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_2dfc0f3f12.mp3"></audio>
+  <!-- Background Music (user controlled) -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-dreams.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
-    // THEME
-    const toggleTheme = document.getElementById("toggleTheme");
-    toggleTheme.addEventListener("click", ()=> document.body.classList.toggle("light"));
-
-    // MUSIC
-    const musicBtn = document.getElementById("toggleMusic");
-    const bgMusic = document.getElementById("bgMusic");
-    musicBtn.addEventListener("click", ()=>{
-      if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent="🔇"; }
-      else { bgMusic.pause(); musicBtn.textContent="🔊"; }
+    /* ====== intro title letters ====== */
+    const rawTitle = "Welcome to Pakistan’s Landscapes--Dev-By-ASHBEEL Zai";
+    const introTitle = document.getElementById('introTitle');
+    rawTitle.split('').forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      span.style.setProperty('--delay', (i * 0.09) + 's');
+      span.textContent = ch;
+      introTitle.appendChild(span);
     });
 
-    // 3D Hover tilt
-    document.querySelectorAll(".gallery img").forEach(img=>{
-      img.addEventListener("mousemove", e=>{
-        const rect = img.getBoundingClientRect();
-        const x = e.clientX - rect.left; 
-        const y = e.clientY - rect.top;
-        const centerX = rect.width/2, centerY = rect.height/2;
-        const rotateX = ((y-centerY)/centerY)*10;
-        const rotateY = ((x-centerX)/centerX)*10;
-        img.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    /* ====== intro controls ====== */
+    const intro = document.getElementById('intro');
+    const enterBtn = document.getElementById('enterBtn');
+    const skipIntro = document.getElementById('skipIntro');
+    const playMontageBtn = document.getElementById('playMontageBtn');
+    let introTimeout = null;
+    function closeIntro(){
+      if(!intro) return;
+      intro.classList.add('hide');
+      setTimeout(()=> { intro.style.display='none'; }, 700);
+    }
+    enterBtn.addEventListener('click', closeIntro);
+    skipIntro.addEventListener('click', closeIntro);
+    introTimeout = setTimeout(closeIntro, 7500);
+
+    /* ====== reveal on scroll ====== */
+    const sections = document.querySelectorAll('.section');
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.82;
+      sections.forEach((s,i) => {
+        if(s.getBoundingClientRect().top < trigger) setTimeout(()=> s.classList.add('show'), i*60);
       });
-      img.addEventListener("mouseleave", ()=>{
-        img.style.transform = "rotateX(0) rotateY(0) scale(1)";
+    };
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+
+    /* ====== 3D mouse-follow tilt (throttled via rAF) ====== */
+    function attachTilt(photoEl) {
+      const img = photoEl.querySelector('img');
+      if(!img) return;
+      const strength = 14; // degrees
+      let frame = null;
+      function onMove(e) {
+        const rect = photoEl.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const x = (clientX - rect.left) / rect.width;
+        const y = (clientY - rect.top) / rect.height;
+        const rx = (0.5 - y) * strength;
+        const ry = (x - 0.5) * strength;
+        const scale = 1.04;
+        if(frame) cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          img.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(${scale})`;
+        });
+      }
+      function onLeave(){
+        if(frame) cancelAnimationFrame(frame);
+        img.style.transition = 'transform .45s var(--ease)';
+        img.style.transform = 'scale(1)';
+        setTimeout(()=> img.style.transition = '', 500);
+      }
+      photoEl.addEventListener('mousemove', onMove);
+      photoEl.addEventListener('mouseleave', onLeave);
+      photoEl.addEventListener('touchmove', onMove, {passive:true});
+      photoEl.addEventListener('touchend', onLeave);
+    }
+    document.querySelectorAll('.photo').forEach(p => attachTilt(p));
+
+    /* ====== LIGHTBOX + MONTAGE ====== */
+    const lightbox = document.getElementById('lightbox');
+    const lbMedia = document.querySelector('.lb-media');
+    const lbCaption = document.querySelector('.lb-caption');
+    const lbClose = document.getElementById('lbClose');
+    const lbPause = document.getElementById('lbPause');
+    let montageTimer = null;
+    let montageSlides = [];
+    let montageIndex = 0;
+    let montagePlaying = false;
+
+    function openLightbox(src, caption){
+      lbMedia.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = caption || '';
+      lbMedia.appendChild(img);
+      lbCaption.textContent = caption || '';
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden','true');
+      lbMedia.innerHTML = '';
+      if(montageTimer) clearInterval(montageTimer);
+      montageSlides = [];
+      montagePlaying = false;
+      document.body.style.overflow = '';
+    }
+
+    function startMontage(){
+      lbMedia.innerHTML = '';
+      montageSlides = [];
+      document.querySelectorAll('.photo img').forEach((img, i) => {
+        const div = document.createElement('div');
+        div.className = 'montage-slide' + (i===0 ? ' active' : '');
+        div.style.backgroundImage = `url('${img.src}')`;
+        lbMedia.appendChild(div);
+        montageSlides.push(div);
+      });
+      montageIndex = 0;
+      montagePlaying = true;
+      lbCaption.textContent = 'Cinematic Montage';
+      montageTimer = setInterval(()=> {
+        montageSlides[montageIndex].classList.remove('active');
+        montageIndex = (montageIndex + 1) % montageSlides.length;
+        montageSlides[montageIndex].classList.add('active');
+      }, 2600);
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    document.querySelectorAll('.photo').forEach(p=>{
+      p.addEventListener('click', (ev) => {
+        const img = p.querySelector('img');
+        // shift-click -> montage
+        if(ev.shiftKey){
+          closeIntro(); // if intro showing
+          startMontage();
+        } else {
+          openLightbox(img.src, p.dataset.caption || img.alt);
+        }
       });
     });
 
-    // Modal popup
-    const modal = document.getElementById("infoModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalText = document.getElementById("modalText");
-    const closeBtn = document.querySelector(".closeBtn");
-
-    document.querySelectorAll(".gallery img").forEach(img=>{
-      img.addEventListener("click", ()=>{
-        modal.classList.add("show");
-        modalTitle.textContent = img.alt;
-        modalText.textContent = img.getAttribute("data-info");
-      });
+    lbClose.addEventListener('click', closeLightbox);
+    lbPause.addEventListener('click', ()=>{
+      if(!montagePlaying){
+        // resume
+        montagePlaying = true;
+        lbPause.textContent = '⏸';
+        montageTimer = setInterval(()=> {
+          montageSlides[montageIndex].classList.remove('active');
+          montageIndex = (montageIndex + 1) % montageSlides.length;
+          montageSlides[montageIndex].classList.add('active');
+        }, 2600);
+      } else {
+        // pause
+        montagePlaying = false;
+        lbPause.textContent = '▶';
+        clearInterval(montageTimer);
+      }
     });
-    closeBtn.addEventListener("click", ()=> modal.classList.remove("show"));
-    modal.addEventListener("click", e=>{ if(e.target===modal) modal.classList.remove("show"); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+
+    playMontageBtn.addEventListener('click', () => {
+      clearTimeout(introTimeout);
+      closeIntro();
+      setTimeout(startMontage, 600);
+    });
+
+    /* ====== Theme toggle ====== */
+    document.getElementById('toggleTheme').addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+
+    /* ====== Music toggle ====== */
+    const music = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('toggleMusic');
+    musicBtn.addEventListener('click', ()=>{
+      if(music.paused){ music.play().catch(()=>{}); musicBtn.textContent = '🔈'; }
+      else { music.pause(); musicBtn.textContent = '🔊'; }
+    });
+
+    // Prevent accidental autoplay issues: pause on load
+    window.addEventListener('load', ()=> { try{ music.pause(); musicBtn.textContent='🔊' }catch(e){} });
+
   </script>
 </body>
 </html>
